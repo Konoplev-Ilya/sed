@@ -14,6 +14,6 @@
  5. количество_документов_в_партии(умолчание - 100)
 ## примеры:
     bash ./on_perfomance.sh login pass minsk  
-   
+
     bash ./on_perfomance.sh login pass minsk 10.07.2021 1000
 
