@@ -1,6 +1,17 @@
-first=$(curl -s -u $1:$2  -d "_search=false&nd=1630308756315&rows=10000&page=1&sidx=regdt&sord=asc&dateFilterTo=01.08.2021&search=true" -X POST "http://198.19.0.6/csp/$3/json.pcrec.cls")
-docs_id_on_page=$(echo $first | jq .rows[].id | sed -e "s/^.//;s/.$//")
-for a in $docs_id_on_page
-do
-curl -s -u $1:$2 -d "oper=viewed&id=$a" -X GET http://198.19.0.6/csp/$3/json.pcrec.cls
-echo ''
+#!/bin/bash
+source ./func/get_and_read.sh
+
+date_filter=01.08.2021
+doc_on_page=100
+
+if [ $4 ] ; then
+   date_filter=$4
+fi
+
+if [ $5 ] ; then
+  doc_on_page=$5
+fi
+
+#$6 pcrec - enrolled.sh
+
+get_and_read $1 $2 $3 $date_filter $doc_on_page pcrec
