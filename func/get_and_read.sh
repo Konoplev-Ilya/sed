@@ -28,12 +28,12 @@ get_and_read(){
     docs_id_on_page=$(echo $json | jq '.rows[] | select(.viewed == "0") | .id' | sed -e "s/^.//;s/.$//")
     counter=0
 
-    echo -ne "[страница $i из $last_page]" "[документов прочитано $counter из $count_to_view]\r"
+    echo -ne "[login:$1][страница $i из $last_page]" "[документов прочитано $counter из $count_to_view]\r"
 
     for a in $docs_id_on_page
     do
         counter=$(($counter+1))
-        echo -ne "[страница $i из $last_page]" "[документов прочитано $counter из $count_to_view]\r"
+        echo -ne "[login:$1][страница $i из $last_page]" "[документов прочитано $counter из $count_to_view]\r"
         res=$(curl -s -u $1:$2 -d "oper=viewed&id=$a" -X GET http://198.19.0.6/csp/$3/json.$6.cls)
 
         if ! echo "$res" | grep -q true ; then
