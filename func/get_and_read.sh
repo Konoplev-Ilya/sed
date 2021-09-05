@@ -5,14 +5,19 @@ get_and_read(){
     echo "по $5 документов на странице"
 
     first=$(curl -s -u $1:$2  -d "_search=false&nd=1630323606058&rows=$5&page=1&sidx=dr&sord=asc&filter=36&search=true&dateFilterTo=$4" -X POST "http://198.19.0.6/csp/$3/json.$6.cls")
-    last_page=$(echo $first | jq .total | sed -e "s/^.//;s/.$//")
-    total_doc_counter=0
-
+    
     if ! echo "$first" | grep -q rows ; then
+        if echo "$first" | grep -q 'ОШИБКА #822: Отказано в доступе' ; then
+            echo "$1 неверный пароль? ОШИБКА #822: Отказано в доступе"
+            return -6
+        fi
     echo -ne '\r\n'
     echo 'сервак отвечает невнятное'
     exit 1
     fi
+
+    last_page=$(echo $first | jq .total | sed -e "s/^.//;s/.$//")
+    total_doc_counter=0
 
     for i in $(seq 1 $last_page)
     do

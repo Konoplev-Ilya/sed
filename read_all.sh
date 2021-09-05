@@ -28,6 +28,7 @@ if [ -n "$file" ] ; then
     while IFS= read -r line
     do
         read login pass <<< "$line"
+        echo "login: $login"
         get_and_read $login $pass $region $date_filter $doc_on_page pcexe
         get_and_read $login $pass $region $date_filter $doc_on_page pcrec
     done < $file
