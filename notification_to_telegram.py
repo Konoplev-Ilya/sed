@@ -28,7 +28,7 @@ async def check_and_notify(login, passwd, user_id, telegram_token, region):
                     async with session.post(f'https://api.telegram.org/bot{telegram_token}/sendMessage', data = {'chat_id' : user_id, 'text': text_message}) as r:
                         pass
                     data = mails
-                print(mails)
+                print(login, mails)
                 await asyncio.sleep(5)
 
 
@@ -37,9 +37,19 @@ async def main():
     parser.add_argument("-f", required=True, metavar='file name', type=str, help="file with logins, passwords and telegram ID")
     parser.add_argument('-r', required=True, metavar='region', type=str, help='sed base region')
     args = parser.parse_args()
+
+    #create_task
+    ioloop = asyncio.get_running_loop()
+    # tasks = []
+    # wait_tasks = asyncio.wait(ioloop.create_task(bar()))
+    
+
     with open(args.f, "r") as f:
         for line in f.readlines():
-            await check_and_notify(*line.split(), telegram_token, args.r)
+            asyncio.create_task(check_and_notify(*line.split(), telegram_token, args.r))
+            # asyncio.wait(check_and_notify(*line.split(), telegram_token, args.r))
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    loop = asyncio.get_event_loop()
+    loop.create_task(main())
+    loop.run_forever()
