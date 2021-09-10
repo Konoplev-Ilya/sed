@@ -38,16 +38,9 @@ async def main():
     parser.add_argument('-r', required=True, metavar='region', type=str, help='sed base region')
     args = parser.parse_args()
 
-    #create_task
-    ioloop = asyncio.get_running_loop()
-    # tasks = []
-    # wait_tasks = asyncio.wait(ioloop.create_task(bar()))
-    
-
     with open(args.f, "r") as f:
         for line in f.readlines():
             asyncio.create_task(check_and_notify(*line.split(), telegram_token, args.r))
-            # asyncio.wait(check_and_notify(*line.split(), telegram_token, args.r))
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
