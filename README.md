@@ -2,13 +2,16 @@
 
 ## read_all.sh
 читаем из 2 журналов. опция -f к файлу с логинами и паролями, разделенными пробелом, по одной паре в строке
+---
+    bash ./read_all.sh -f passwd.txt kleck
+
 ## enrolled.sh
 Читаем журнал поступившие.
 ## on_perfomance.sh
 Читаем журнал на исполнении.  
 
 ---
-### аргументы 1-3:  
+##### аргументы 1-3:  
 
  1. логин 
  2. пасс 
@@ -18,12 +21,10 @@
 
  4. дата (новее не читать. по умолчанию: 01.08.2021)
  5. количество документов в партии
-#### примеры:
+---
     bash ./on_perfomance.sh login pass minsk  
 ---
     bash ./enrolled.sh login pass minsk 10.07.2021 1000
----
-    bash ./read_all.sh -f passwd.txt kleck
 
 ## notification_to_telegram.py
 Уведомления в телеграм.
