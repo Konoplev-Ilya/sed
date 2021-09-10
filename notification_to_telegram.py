@@ -52,8 +52,4 @@ async def main():
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.create_task(main())
-<<<<<<< HEAD
     loop.run_forever()
-=======
-    loop.run_forever()
->>>>>>> 94b0d88a4e2dfd5a2f91a4c96398cc5dc4b8b849
