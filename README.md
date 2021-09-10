@@ -24,3 +24,12 @@
     bash ./enrolled.sh login pass minsk 10.07.2021 1000
 ---
     bash ./read_all.sh -f passwd.txt kleck
+
+## notification_to_telegram.py
+Уведомления в телеграм. Аргументы 
+
+ 1. -f имя_файла с логинами, паролями, id в телеграме
+ 2. -r регион
+
+ #### Пример:
+     python notification_to_telegram.py -f file.txt -r soligorsk
