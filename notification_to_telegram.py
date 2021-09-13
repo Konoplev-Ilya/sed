@@ -33,7 +33,6 @@ async def check_and_notify(login, passwd, user_id, telegram_token, region):
                     if mails[3] - prev_data[3] > 0:
                         text_message += f'Изменения.\nНа утверждении: +{mails[3] - prev_data[3]},\n'
 
-                    #text_message = f'Изменения.\nПоступивших: {mails["0"]},\nНа исполнении: {mails["1"]},\nНа согласовании: {mails["2"]},\nНа утверждении: {mails["3"]}.\n'
                     async with session.post(f'https://api.telegram.org/bot{telegram_token}/sendMessage', data = {'chat_id' : user_id, 'text': text_message}) as r:
                         pass
                     prev_data = mails
