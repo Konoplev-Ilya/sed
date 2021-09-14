@@ -22,22 +22,24 @@ async def check_and_notify(login, passwd, user_id, telegram_token, region):
                     text_message = f'Инициализация.\nПоступивших: {mails[0]},\nНа исполнении: {mails[1]},\nНа согласовании: {mails[2]},\nНа утверждении: {mails[3]}.\nЕсли количество писем возрастет, я сообщу.'
                     async with session.post(f'https://api.telegram.org/bot{telegram_token}/sendMessage', data = {'chat_id' : user_id, 'text': text_message}) as r:
                         pass
-                    prev_data = mails
+                    prev_data = mails[:]
                 elif prev_data != mails:
+                    text_message = ""
                     if mails[0] - prev_data[0] > 0:
-                        text_message = f'Изменения.\nПоступивших: +{mails[0] - prev_data[0]},\n'
+                        text_message += f'\nПоступивших: +{mails[0] - prev_data[0]}\n'
                     if mails[1] - prev_data[1] > 0:
-                        text_message += f'Изменения.\nНа исполнении: +{mails[1] - prev_data[1]},\n'
+                        text_message += f'\nНа исполнении: +{mails[1] - prev_data[1]}\n'
                     if mails[2] - prev_data[2] > 0:
-                        text_message += f'Изменения.\nНа согласовании: +{mails[2] - prev_data[2]},\n'
+                        text_message += f'\nНа согласовании: +{mails[2] - prev_data[2]}\n'
                     if mails[3] - prev_data[3] > 0:
-                        text_message += f'Изменения.\nНа утверждении: +{mails[3] - prev_data[3]},\n'
+                        text_message += f'\nНа утверждении: +{mails[3] - prev_data[3]}\n'
 
                     async with session.post(f'https://api.telegram.org/bot{telegram_token}/sendMessage', data = {'chat_id' : user_id, 'text': text_message}) as r:
                         pass
-                    prev_data = mails
+                    prev_data = mails[:]
                 print(login, mails)
                 await asyncio.sleep(5)
+            prev_data[0] = prev_data[0]+1
 
 
 async def main():
